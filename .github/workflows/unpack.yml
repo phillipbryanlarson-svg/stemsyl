@@ -1,0 +1,22 @@
+name: Unpack the zip
+on:
+  push:
+    paths: ['*.zip', '.github/workflows/unpack.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack the zip into the repository, then remove the zip and this file
+        run: |
+          for z in *.zip; do unzip -q -o "$z"; done
+          cp -a stemsyl/. .
+          rm -rf stemsyl *.zip .github/workflows/unpack.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Unpack Stemsyl 1.0"
+          git push
