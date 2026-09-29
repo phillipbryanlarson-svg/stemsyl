@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stemsyl</title>
+<meta name="description" content="Stemsyl writes English by its sounds: each syllable is a stem with coloured ticks. Free keyboards for phones and watches, a reading trainer, the full specification and a 271,173-word pronouncing list.">
+<meta name="author" content="Phillip Bryan Larson">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'%3E%3Crect width='42' height='42' rx='9' fill='%23fff'/%3E%3Cpath d='M5 21H37' stroke='%232C2C2A' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M9 8V21' stroke='%23A19005' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M21 8V34' stroke='%23c40027' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M33 8V21' stroke='%232C2C2A' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<!-- The Stemsyl website's front page. Dedicated to the public domain under CC0 1.0. -->
+<style>
+:root{
+  --paper:#f5f5f0; --card:#ffffff; --text:#23231f; --muted:#66645c; --rule:#e2e0d7; --mark:#534AB7; --mark-ink:#ffffff;
+  --link:#4a41a8; --bezel:#161615;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --paper:#0f0f0e; --card:#1a1a18; --text:#ebe9e0; --muted:#a9a79e; --rule:#2f2e29; --mark:#AFA9EC; --mark-ink:#17152A; --link:#bdb7f5; --bezel:#000; color-scheme:dark; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:17px/1.55 var(--sans)}
+a{color:var(--link)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+nav.top{display:flex;align-items:center;gap:18px;padding:14px 0;font-size:15px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+nav.top::-webkit-scrollbar{display:none}
+nav.top .brand{display:flex;align-items:center;gap:9px;font-weight:750;font-size:18px;letter-spacing:.01em;margin-right:auto;color:var(--text);text-decoration:none}
+nav.top .brand svg{width:26px;height:26px}
+nav.top a{text-decoration:none}
+nav.top a:not(.brand):hover{text-decoration:underline}
+header{padding:36px 0 8px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;max-width:15em}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:40em;margin:0 0 24px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.btn{display:inline-block;padding:11px 18px;border-radius:999px;border:1px solid var(--rule);background:var(--card);color:var(--text);text-decoration:none;font-weight:600;font-size:15.5px}
+.btn.primary{background:var(--mark);border-color:var(--mark);color:var(--mark-ink)}
+.btn:hover{filter:brightness(1.06)}
+figure{margin:0}
+.example{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:10px;overflow:hidden}
+.example img{display:block;width:100%;height:auto}
+.example figcaption,.cap{font-size:14px;color:var(--muted);margin-top:8px}
+section{padding:44px 0 8px}
+h2{font-size:28px;line-height:1.2;letter-spacing:-.01em;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:42em}
+.apps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.app{background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:18px;display:flex;flex-direction:column}
+.shotbox{height:300px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.dev{background:var(--bezel);padding:6px;border-radius:26px;display:inline-block}
+.dev img{display:block;border-radius:21px;height:auto}
+.dev.phone img{width:136px}
+.dev.watch{padding:7px;border-radius:39px}
+.dev.watch img{width:208px;border-radius:32px}
+.app h3{margin:0 0 4px;font-size:19px}
+.app p{margin:0 0 14px;color:var(--muted);font-size:15.5px;flex:1}
+.app .btn{align-self:flex-start}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:18px}
+.step .n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--mark);color:var(--mark-ink);font-weight:700;font-size:14px;margin-bottom:10px}
+.step h3{margin:0 0 6px;font-size:18px}
+.step p{margin:0 0 12px;color:var(--muted);font-size:15.5px}
+.step img,.step .mini{width:100%;height:auto;border-radius:10px;border:1px solid var(--rule);background:#fff;display:block}
+.step .mini{padding:10px 8px 4px}
+.step .mini svg{display:block;width:100%;height:auto}
+.pair{display:flex;align-items:center;gap:6px}
+.pair img{width:calc(50% - 10px);border-radius:16px;border:0;background:none}
+.pair span{color:var(--muted);font-size:18px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.charts figure{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:8px}
+.charts img{width:100%;height:auto;display:block}
+.charts figcaption{font-size:14px;color:#5b5a53;padding:4px 6px 2px}
+.links{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.link{display:block;background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:16px 18px;text-decoration:none;color:var(--text)}
+.link b{display:block;font-size:17px;margin-bottom:2px;color:var(--link)}
+.link span{color:var(--muted);font-size:15px}
+.link:hover{border-color:var(--mark)}
+.free{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--mark);border-radius:0 16px 16px 0;padding:18px 20px;margin-top:18px}
+.free p{margin:0 0 8px}
+.free p:last-child{margin:0}
+footer{padding:40px 0 48px;color:var(--muted);font-size:14px}
+footer p{margin:0 0 6px}
+@media (max-width:860px){ .apps,.how{grid-template-columns:1fr} .shotbox{height:auto;padding:6px 0} .charts,.links{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Stemsyl">
+    <a class="brand" href="index.html"><svg viewBox="0 0 42 42" aria-hidden="true"><path d="M5 21H37" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M9 8V21" stroke="#A19005" stroke-width="7" stroke-linecap="round"/><path d="M21 8V34" stroke="#c40027" stroke-width="7" stroke-linecap="round"/><path d="M33 8V21" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg>Stemsyl</a>
+    <a href="stemsyl-keyboard.html">Keyboard</a>
+    <a href="stemsyl-keyboard-watch.html">Watch</a>
+    <a href="stemsyl-trainer.html">Trainer</a>
+    <a href="stemsyl.html">Specification</a>
+    <a data-repo="" href="../">Source</a>
+  </nav>
+
+  <header>
+    <h1>English, written by its sounds.</h1>
+    <p class="lede">Stemsyl draws each syllable as a short stem with up to three coloured ticks. Where a tick sits and what colour it is names one of English's 38 sounds, so any sound takes two taps on nine keys, even on a watch.</p>
+    <div class="cta">
+      <a class="btn primary" href="stemsyl-keyboard.html">Open the keyboard</a>
+      <a class="btn" href="stemsyl.html">Read the specification</a>
+      <a class="btn" href="stemsyl-trainer.html">Learn to read it</a>
+    </div>
+    <figure class="example">
+      <img src="figures/fig-example.svg" width="654" height="280" alt="The sentences Practice makes perfect. We met Jon in London at 7:45 on Monday. written in Stemsyl, with the English under each word">
+    </figure>
+  </header>
+
+  <main>
+    <section id="apps" aria-labelledby="apps-h">
+      <h2 id="apps-h">Three free apps</h2>
+      <p class="sub">Each app is a single web page. They work offline and keep your notes on your own device.</p>
+      <div class="apps">
+        <div class="app">
+          <div class="shotbox"><span class="dev phone"><img src="figures/app-phone.png" width="136" height="295" alt="The phone keyboard with a key for every sound"></span></div>
+          <h3>Keyboard</h3>
+          <p>Write notes in Stemsyl on a phone, tablet or computer. Keys has a key for every sound; 3 × 3 takes two taps a sound. On a computer, type English and it turns into Stemsyl.</p>
+          <a class="btn primary" href="stemsyl-keyboard.html">Open</a>
+        </div>
+        <div class="app">
+          <div class="shotbox"><span class="dev watch"><img src="figures/app-watch.png" width="208" height="248" alt="The watch keyboard: a line of the note, word suggestions and the 3 by 3 keys"></span></div>
+          <h3>Watch keyboard</h3>
+          <p>The 3 × 3 keyboard and a whole editor in 208 × 248 points. Hold the middle key of an edge for numbers, punctuation, the options or the cursor, and hold delete to clear the text.</p>
+          <a class="btn primary" href="stemsyl-keyboard-watch.html">Open</a>
+        </div>
+        <div class="app">
+          <div class="shotbox"><span class="dev phone"><img src="figures/app-trainer.png" width="136" height="244" alt="The trainer showing a word to read"></span></div>
+          <h3>Trainer</h3>
+          <p>Practise reading: sounds, words, sentences, numerals and punctuation, with every sound spoken.</p>
+          <a class="btn primary" href="stemsyl-trainer.html">Open</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" aria-labelledby="how-h">
+      <h2 id="how-h">How it works</h2>
+      <p class="sub">Three ideas make the whole script. The <a href="stemsyl.html">specification</a> has every detail.</p>
+      <div class="how">
+        <div class="step">
+          <div class="n">1</div>
+          <h3>A syllable is a stem</h3>
+          <p>Up to three ticks stand on it: the consonant before the vowel, the vowel, and the consonant after it. A leftover consonant gets a stub of its own.</p>
+          <div class="mini"><svg viewBox="40 8 200 70" style="max-height:112px" role="img" aria-label="The word cats: k, a and t on one stem, then s on a stub" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif"><path d="M75 32H107" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M79 18V32" stroke="#A19005" stroke-width="7.5" stroke-linecap="round"/><path d="M91 18V46" stroke="#c40027" stroke-width="7.5" stroke-linecap="round"/><path d="M103 18V32" stroke="#2C2C2A" stroke-width="7.5" stroke-linecap="round"/><path d="M116 32H126" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M121 18V32" stroke="#238DC0" stroke-width="7.5" stroke-linecap="round"/><text x="79" y="70" text-anchor="middle" fill="#A19005" font-size="12" font-weight="700">k</text><text x="91" y="70" text-anchor="middle" fill="#c40027" font-size="12" font-weight="700">a</text><text x="103" y="70" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="700">t</text><text x="121" y="70" text-anchor="middle" fill="#238DC0" font-size="12" font-weight="700">s</text><text x="146" y="36" fill="#66645c" font-size="12">cats</text></svg></div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <h3>Colour and place name the sound</h3>
+          <p>Consonants come in eight colour families: up is voiceless, centred the sonorant, down voiced. Each vowel colour holds two vowels.</p>
+          <div class="mini"><svg viewBox="0 6 290 74" role="img" aria-label="Ink t, n and d, up, centred and down; rose p, m and b; red a and eye" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif"><path d="M17 32H27" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M22 18V32" stroke="#2C2C2A" stroke-width="7.5" stroke-linecap="round"/><text x="22" y="72" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="700">t</text><path d="M47 32H57" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M52 18V46" stroke="#2C2C2A" stroke-width="7.5" stroke-linecap="round"/><text x="52" y="72" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="700">n</text><path d="M77 32H87" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M82 32V46" stroke="#2C2C2A" stroke-width="7.5" stroke-linecap="round"/><text x="82" y="72" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="700">d</text><path d="M127 32H137" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M132 18V32" stroke="#B65754" stroke-width="7.5" stroke-linecap="round"/><text x="132" y="72" text-anchor="middle" fill="#B65754" font-size="12" font-weight="700">p</text><path d="M157 32H167" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M162 18V46" stroke="#B65754" stroke-width="7.5" stroke-linecap="round"/><text x="162" y="72" text-anchor="middle" fill="#B65754" font-size="12" font-weight="700">m</text><path d="M187 32H197" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M192 32V46" stroke="#B65754" stroke-width="7.5" stroke-linecap="round"/><text x="192" y="72" text-anchor="middle" fill="#B65754" font-size="12" font-weight="700">b</text><path d="M233 32H243" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M238 18V46" stroke="#c40027" stroke-width="7.5" stroke-linecap="round"/><text x="238" y="72" text-anchor="middle" fill="#c40027" font-size="12" font-weight="700">a</text><path d="M267 32H277" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><path d="M272 18V32" stroke="#c40027" stroke-width="7.5" stroke-linecap="round"/><text x="272" y="72" text-anchor="middle" fill="#c40027" font-size="12" font-weight="700">eye</text></svg></div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <h3>Two taps a sound</h3>
+          <p>On the 3 × 3 keys, tap where the tick goes, then its colour. Words to choose from appear as you go, and the English goes under each word.</p>
+          <div class="pair"><img src="figures/app-watch.png" alt="The watch keyboard's tick positions" loading="lazy"><span aria-hidden="true">→</span><img src="figures/app-watch-colours.png" alt="The centred vowel's colours" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="charts">
+        <figure><img src="figures/fig-consonants.svg" alt="The 24 consonants: eight colour families, three positions" loading="lazy"><figcaption>24 consonants: the colour is the family, the position says which.</figcaption></figure>
+        <figure><img src="figures/fig-vowels.svg" alt="The 14 vowels: seven colours, three positions" loading="lazy"><figcaption>14 vowels: centred is plain, up glides to ee, down glides to oo.</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="more" aria-labelledby="more-h">
+      <h2 id="more-h">Read, download, build on it</h2>
+      <div class="links">
+        <a class="link" href="stemsyl.html"><b>Specification</b><span>The script, the keyboards, the word list, variations and related work, as a web page.</span></a>
+        <a class="link" href="stemsyl-specification.pdf"><b>Specification (PDF)</b><span>The same, as a PDF to print or share.</span></a>
+        <a class="link" data-repo="data/stemsyl-words.tsv" href="../data/stemsyl-words.tsv"><b>Word list</b><span>271,173 English words in Stemsyl sounds and IPA, commonest first (CC BY-SA 4.0).</span></a>
+        <a class="link" data-repo="" href="../"><b>Source code</b><span>The apps, the build tools, the tests and the word-list pipeline.</span></a>
+      </div>
+      <div class="free">
+        <p><b>Free for everyone, for good.</b> The Stemsyl writing system and its specification are dedicated to the public domain (CC0 1.0). The apps are free software (GPL-3.0-or-later), and the word list is CC BY-SA 4.0.</p>
+        <p>The specification is published as prior art, so no one can patent these ideas. You may use, teach, adapt and build on them.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Stemsyl was created by Phillip Bryan Larson, 2026. The software and documentation were written with the help of Claude, an AI model made by Anthropic.</p>
+    <p>Apple Watch is a trademark of Apple Inc. Stemsyl is not affiliated with or endorsed by Apple.</p>
+  </footer>
+</div>
+<script>
+/* links to the rest of the repository: on GitHub Pages they point at the repository on GitHub; elsewhere, at the files
+   beside this folder */
+(function(){
+  var h=location.hostname, parts=location.pathname.split('/').filter(Boolean), base='../';
+  if(/\.github\.io$/.test(h) && parts.length) base='https://github.com/'+h.split('.')[0]+'/'+parts[0]+'/blob/main/';
+  [].forEach.call(document.querySelectorAll('a[data-repo]'),function(a){
+    var p=a.getAttribute('data-repo'); a.href=(p||base.indexOf('github.com')<0)?base+p:base.replace('/blob/main/','');
+  });
+})();
+</script>
+</body>
+</html>

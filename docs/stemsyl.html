@@ -1,0 +1,1672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stemsyl — specification 1.0</title>
+<meta name="description" content="Specification of Stemsyl, a phonetic script for English in which each syllable is a stem with coloured ticks, and of its keyboards for phones and watches. Dedicated to the public domain (CC0 1.0).">
+<meta name="author" content="Phillip Bryan Larson">
+<link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+<!-- Generated from SPECIFICATION.md by tools/spec.py. This text is dedicated to the public domain under CC0 1.0. -->
+<style>
+:root{
+  --paper:#ffffff; --text:#23231f; --muted:#66645c; --rule:#e4e2da; --soft:#f6f5f0; --mark:#534AB7; --link:#4a41a8;
+  --serif:"Charis SIL","Liberation Serif",Georgia,"Times New Roman",serif;
+  --sans:"Carlito","Calibri",-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"DejaVu Sans Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --paper:#111110; --text:#e8e6dd; --muted:#aaa89f; --rule:#34332e; --soft:#1b1b19; --mark:#AFA9EC; --link:#b9b3f2; color-scheme:dark; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:17px/1.6 var(--serif);font-kerning:normal}
+.top{font:14px/1.4 var(--sans);border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:2}
+.top .in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;gap:18px;align-items:center;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.top .in::-webkit-scrollbar{display:none}
+.top b{font-weight:700;letter-spacing:.02em;margin-right:auto}
+.top a{color:var(--link);text-decoration:none}
+.top a:hover{text-decoration:underline}
+main{max-width:760px;margin:0 auto;padding:28px 16px 64px}
+h1{font:700 44px/1.1 var(--sans);letter-spacing:-.01em;margin:10px 0 6px}
+h1 + p{font:600 21px/1.35 var(--sans);margin:0 0 8px;color:var(--text)}
+h1 + p + p{font:15px/1.5 var(--sans);color:var(--muted);margin:0 0 16px}
+h1 + p + p + p{font-size:15px;background:var(--soft);border-left:3px solid var(--mark);padding:10px 14px;border-radius:0 8px 8px 0}
+h2{font:700 26px/1.25 var(--sans);margin:44px 0 10px;padding-top:6px;border-top:1px solid var(--rule)}
+h3{font:700 19px/1.3 var(--sans);margin:28px 0 6px}
+h2,h3{scroll-margin-top:56px}
+p,ul,ol{margin:0 0 14px}
+li{margin:3px 0}
+li > ul{margin:4px 0 6px}
+a{color:var(--link)}
+code{font:.84em var(--mono);background:var(--soft);border:1px solid var(--rule);border-radius:5px;padding:.08em .35em;word-break:break-word}
+blockquote{margin:0 0 16px;padding:10px 16px;background:var(--soft);border-left:3px solid var(--mark);border-radius:0 8px 8px 0}
+blockquote p{margin:0}
+.tw{overflow-x:auto;margin:6px 0 18px}
+table{border-collapse:collapse;font:14.5px/1.4 var(--sans);min-width:100%}
+th,td{text-align:left;vertical-align:top;padding:6px 10px;border-bottom:1px solid var(--rule)}
+th{font-weight:700;border-bottom:2px solid var(--rule);white-space:nowrap}
+tbody tr:nth-child(even){background:var(--soft)}
+td em{font-family:var(--serif)}
+figure{margin:22px 0 26px;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--rule);background:#fff}
+figure.wide{margin-left:calc(50% - min(540px, 50vw - 16px));margin-right:calc(50% - min(540px, 50vw - 16px))}
+figcaption{font:14px/1.45 var(--sans);color:var(--muted);margin-top:8px}
+p.note{font:italic 14px/1.45 var(--sans);color:var(--muted);margin-top:-8px}
+.sw{display:inline-block;width:.95em;height:.95em;border-radius:3px;vertical-align:-.12em;margin-right:6px;border:1px solid rgba(0,0,0,.18)}
+.c-ink{color:#2C2C2A}.c-rose{color:#B65754}.c-mauve{color:#A55B91}.c-indigo{color:#4848B9}.c-blue{color:#238DC0}.c-emerald{color:#229279}.c-olive{color:#4F7103}.c-amber{color:#A19005}
+.c-red{color:#C40027}.c-orange{color:#8F2400}.c-yellow{color:#A88600}.c-green{color:#236B27}.c-vblue{color:#002FEC}.c-grey{color:#5F5F5F}.c-violet{color:#582684}
+@media (prefers-color-scheme:dark){
+  .c-ink{color:#E8E6DD}.c-rose{color:#E07B77}.c-mauve{color:#D487BE}.c-indigo{color:#9084FF}.c-blue{color:#6FC6FC}.c-emerald{color:#55BCA1}.c-olive{color:#BCDD73}.c-amber{color:#A6940E}
+  .c-red{color:#C34A55}.c-orange{color:#FF7F00}.c-yellow{color:#FFE135}.c-green{color:#A1FD60}.c-vblue{color:#5081C8}.c-grey{color:#999999}.c-violet{color:#9826EA}
+  .sw{border-color:rgba(255,255,255,.25)}
+}
+h2#contents + ol{columns:2;column-gap:36px;font-family:var(--sans)}
+h2#contents + ol li{break-inside:avoid;margin:0 0 5px}
+.foot{font:13px/1.5 var(--sans);color:var(--muted);border-top:1px solid var(--rule);margin-top:48px;padding-top:14px}
+@media (max-width:600px){ .top .in{gap:14px} h2#contents + ol{columns:1} body{font-size:16px} h1{font-size:36px} h2{font-size:23px} table{font-size:13.5px} th,td{padding:5px 7px} }
+@page{size:Letter;margin:17mm 17mm 19mm}
+@media print{
+  :root{--paper:#fff;--text:#1d1d1b;--muted:#5b5a53;--rule:#d8d6cd;--soft:#f5f4ef;--mark:#534AB7;--link:#1d1d1b;color-scheme:light}
+  .c-ink{color:#2C2C2A}.c-rose{color:#B65754}.c-mauve{color:#A55B91}.c-indigo{color:#4848B9}.c-blue{color:#238DC0}.c-emerald{color:#229279}.c-olive{color:#4F7103}.c-amber{color:#A19005}
+  .c-red{color:#C40027}.c-orange{color:#8F2400}.c-yellow{color:#A88600}.c-green{color:#236B27}.c-vblue{color:#002FEC}.c-grey{color:#5F5F5F}.c-violet{color:#582684}
+  .top,.foot .web{display:none}
+  body{font-size:10.6pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  main{max-width:none;padding:0}
+  h1{font-size:30pt;margin-top:0} h1 + p{font-size:15pt} h1 + p + p, h1 + p + p + p{font-size:10pt}
+  h2{font-size:16pt;margin:22pt 0 6pt;break-after:avoid}
+  h3{font-size:12.5pt;margin:14pt 0 4pt;break-after:avoid}
+  h2#1-about-this-document, h2#11-appendix-tables{break-before:page;border-top:0;padding-top:0}
+  p,li{orphans:3;widows:3}
+  table{font-size:9pt}
+  th,td{padding:3.5pt 6pt}
+  tr,figure,blockquote{break-inside:avoid}
+  .tw{overflow:visible}
+  figure{margin:12pt 0 14pt}
+  figure.wide{margin-left:0;margin-right:0}
+  figure img{border-radius:6px}
+  figcaption{font-size:9pt}
+  a{text-decoration:none}
+  code{font-size:.82em}
+}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Stemsyl"><div class="in"><b>Stemsyl</b><a href="index.html">Home</a><a href="stemsyl-keyboard.html">Keyboard</a><a href="stemsyl-keyboard-watch.html">Watch</a><a href="stemsyl-trainer.html">Trainer</a><a href="stemsyl-specification.pdf">PDF</a><a data-repo="" href="../">Source</a></div></nav>
+<main>
+<h1 id="stemsyl">Stemsyl</h1>
+<p><strong>A colour-stem phonetic script for English, with keyboards for phones and watches</strong></p>
+<p>Specification, version 1.0 · 28 September 2026 · Phillip Bryan Larson</p>
+<p>This specification and the Stemsyl writing system are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. Anyone may use, copy, change, teach and build on them, for any purpose, without asking.</p>
+<h2 id="abstract">Abstract</h2>
+<p>Stemsyl is a phonetic writing system for English. Each syllable is drawn as a short horizontal stem carrying up to three vertical ticks: the consonant before the vowel, the vowel, and the consonant after it. A tick can be above the stem, centred across it, or below it. Its position together with its colour names exactly one sound. The 24 consonants form eight colour families of three, and the 14 vowels use seven colours in up to three positions each. A consonant that belongs to no vowel stands on a short stub of its own. Numerals are dice-like patterns on a 3 × 3 grid, and a diamond marks names.</p>
+<p>Because every sound is a choice of position and then of colour, Stemsyl can be typed with two taps on a 3 × 3 grid of keys. This document specifies the script and several ways of typing it:</p>
+<ul>
+<li>a keyboard with a key for every sound</li>
+<li>the two-tap 3 × 3 keyboard</li>
+<li>a watch keyboard that fits a whole editor into 208 × 248 points and reaches its other pages of keys by holding the middle key of an edge</li>
+<li>a 3 × 3 keyboard for Latin letters</li>
+<li>a rule for showing the English word under each written word when exactly one English word has those sounds</li>
+</ul>
+<p>It also documents the 271,173-word pronouncing list that the reference apps use, and many variations. It is published so that all of this is prior art, free for anyone to use.</p>
+<h2 id="contents">Contents</h2>
+<ol>
+<li><a href="#1-about-this-document">About this document</a></li>
+<li><a href="#2-the-sounds">The sounds</a></li>
+<li><a href="#3-the-glyphs">The glyphs</a></li>
+<li><a href="#4-writing-english-in-stemsyl">Writing English in Stemsyl</a></li>
+<li><a href="#5-keyboards">Keyboards</a></li>
+<li><a href="#6-the-word-list">The word list</a></li>
+<li><a href="#7-variations-and-extensions">Variations and extensions</a></li>
+<li><a href="#8-related-work">Related work</a></li>
+<li><a href="#9-reference-implementation">Reference implementation</a></li>
+<li><a href="#10-licence-authorship-and-citation">Licence, authorship and citation</a></li>
+<li><a href="#11-appendix-tables">Appendix: tables</a></li>
+</ol>
+<h2 id="1-about-this-document">1. About this document</h2>
+<h3 id="11-purpose">1.1 Purpose</h3>
+<p>This is a defensive publication. It describes the Stemsyl writing system, the methods of typing it and the software that implements them in enough detail for a person skilled in the field to reproduce them. The date on it establishes all of this as prior art, so no one can later patent these ideas and lock them up. The author claims no patent on any of it and dedicates the writing system and this text to the public domain.</p>
+<h3 id="12-what-it-covers">1.2 What it covers</h3>
+<ul>
+<li><strong>The script</strong> (sections 2 and 3): its sounds, the shape and colour of every glyph, how sounds group into syllables, numerals, punctuation, the name mark, and captions in English or IPA.</li>
+<li><strong>Transcription</strong> (section 4): turning English into Stemsyl with a pronouncing word list, and deciding which English word a written word stands for.</li>
+<li><strong>Keyboards</strong> (section 5): the key-per-sound keyboard, the two-tap 3 × 3 keyboard, the watch keyboard with its hold-to-switch keys, display mode and edit bar, the Latin-letter 3 × 3 keyboard, word suggestions, physical keyboards and paste.</li>
+<li><strong>The word list</strong> (section 6): its sources, how its pronunciations were made, and its file format.</li>
+<li><strong>Variations</strong> (section 7): other accents and languages, other ways to draw and colour the glyphs, and other devices and gestures for the same input methods.</li>
+</ul>
+<h3 id="13-reference-implementation">1.3 Reference implementation</h3>
+<p>Three single-file web apps implement everything described here. They run in any modern browser, offline. The keyboards keep their notes on the device. The apps are released as free software under GPL-3.0-or-later (section 10).</p>
+<ul>
+<li><strong>Stemsyl Keyboard</strong> (<a href="stemsyl-keyboard.html"><code>docs/stemsyl-keyboard.html</code></a>): a note editor for phones, tablets and computers, with two keyboard layouts, Keys and 3 × 3.</li>
+<li><strong>Stemsyl Keyboard for Watch</strong> (<a href="stemsyl-keyboard-watch.html"><code>docs/stemsyl-keyboard-watch.html</code></a>): the 3 × 3 keyboard and a complete editor in a 208 × 248-point screen.</li>
+<li><strong>Stemsyl Trainer</strong> (<a href="stemsyl-trainer.html"><code>docs/stemsyl-trainer.html</code></a>): reading practice with spoken sounds.</li>
+</ul>
+<p>Where this document gives a size, a time or a colour, it is the value the reference apps use. Other values that keep the same relationships are equally Stemsyl.</p>
+<h3 id="14-notation">1.4 Notation</h3>
+<p>Sounds are given in IPA between slashes, for example /θ/. Each sound also has a one-character <strong>sound letter</strong>, used in the data files and the apps' code, and a short <strong>name</strong> shown on the keys, for example <code>T</code> and <em>th</em>. Section 11 lists all three for every sound. Glyph measurements are in <strong>units</strong>: a glyph is 64 units tall, and y grows downward.</p>
+<h2 id="2-the-sounds">2. The sounds</h2>
+<p>Stemsyl writes the sounds of General American English, not its spellings: 24 consonants and 14 vowels. Stress is not written.</p>
+<h3 id="21-consonants">2.1 Consonants</h3>
+<p>The consonants form eight families of three. The family decides the colour. The member decides the position:</p>
+<ul>
+<li><strong>up</strong>: voiceless</li>
+<li><strong>centred</strong>: the family's sonorant, or <em>h</em></li>
+<li><strong>down</strong>: voiced</li>
+</ul>
+<p>The families are loosely ordered around the colour wheel from the lips to the back of the mouth, so that a misread colour tends to land on a related sound. The first family, the alveolar <em>t n d</em>, is written in plain ink because it is the most frequent.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Up</th>
+<th>Centred</th>
+<th>Down</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong class="c-ink">ink</strong></td>
+<td>t /t/ <em>tie</em></td>
+<td>n /n/ <em>nigh</em></td>
+<td>d /d/ <em>die</em></td>
+</tr>
+<tr>
+<td><strong class="c-rose">rose</strong></td>
+<td>p /p/ <em>pie</em></td>
+<td>m /m/ <em>my</em></td>
+<td>b /b/ <em>buy</em></td>
+</tr>
+<tr>
+<td><strong class="c-mauve">mauve</strong></td>
+<td>f /f/ <em>fee</em></td>
+<td>w /w/ <em>why</em></td>
+<td>v /v/ <em>vee</em></td>
+</tr>
+<tr>
+<td><strong class="c-indigo">indigo</strong></td>
+<td>th /θ/ <em>thigh</em></td>
+<td>h /h/ <em>high</em></td>
+<td>dh /ð/ <em>thy</em></td>
+</tr>
+<tr>
+<td><strong class="c-blue">blue</strong></td>
+<td>s /s/ <em>sue</em></td>
+<td>l /l/ <em>lie</em></td>
+<td>z /z/ <em>zoo</em></td>
+</tr>
+<tr>
+<td><strong class="c-emerald">emerald</strong></td>
+<td>sh /ʃ/ <em>shoe</em></td>
+<td>r /r/ <em>rye</em></td>
+<td>zh /ʒ/ <em>vision</em></td>
+</tr>
+<tr>
+<td><strong class="c-olive">olive</strong></td>
+<td>ch /tʃ/ <em>chew</em></td>
+<td>y /j/ <em>yes</em></td>
+<td>j /dʒ/ <em>jaw</em></td>
+</tr>
+<tr>
+<td><strong class="c-amber">amber</strong></td>
+<td>k /k/ <em>kite</em></td>
+<td>ng /ŋ/ <em>sing</em></td>
+<td>g /ɡ/ <em>guy</em></td>
+</tr>
+</tbody>
+</table></div>
+<figure><img loading="lazy" alt="The 24 consonant glyphs: eight colour families across, three positions down" src="figures/fig-consonants.svg" /><figcaption><em>Figure 1. The consonants, each drawn as a lone consonant on its stub (section 3.3).</em></figcaption></figure>
+<h3 id="22-vowels">2.2 Vowels</h3>
+<p>Each vowel colour holds a plain vowel and a vowel that starts near it. The position says how the vowel ends:</p>
+<ul>
+<li><strong>centred</strong>: the plain vowel</li>
+<li><strong>up</strong>: glides toward <em>ee</em></li>
+<li><strong>down</strong>: glides toward <em>oo</em></li>
+</ul>
+<p><em>aw</em> is the one exception: it does not glide, but it is written down, in grey, beside the plain <em>uh</em>.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Colour</th>
+<th>Centred</th>
+<th>Up</th>
+<th>Down</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong class="c-red">red</strong></td>
+<td>a /æ/ <em>cat</em></td>
+<td>eye /aɪ/ <em>my</em></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong class="c-orange">orange</strong></td>
+<td>ah /ɑ/ <em>father</em></td>
+<td>—</td>
+<td>ow /aʊ/ <em>now</em></td>
+</tr>
+<tr>
+<td><strong class="c-yellow">yellow</strong></td>
+<td>e /ɛ/ <em>bed</em></td>
+<td>ay /eɪ/ <em>day</em></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong class="c-green">green</strong></td>
+<td>i /ɪ/ <em>sit</em></td>
+<td>ee /i/ <em>see</em></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong class="c-vblue">blue</strong></td>
+<td>u /ʊ/ <em>book</em></td>
+<td>—</td>
+<td>oo /u/ <em>too</em></td>
+</tr>
+<tr>
+<td><strong class="c-grey">grey</strong></td>
+<td>uh /ə/ <em>about</em></td>
+<td>—</td>
+<td>aw /ɔ/ <em>law</em></td>
+</tr>
+<tr>
+<td><strong class="c-violet">violet</strong></td>
+<td>—</td>
+<td>oy /ɔɪ/ <em>boy</em></td>
+<td>oh /oʊ/ <em>go</em></td>
+</tr>
+</tbody>
+</table></div>
+<figure><img loading="lazy" alt="The 14 vowel glyphs: seven colours across, three positions down" src="figures/fig-vowels.svg" /><figcaption><em>Figure 2. The vowels, each drawn as a syllable with only a vowel tick.</em></figcaption></figure>
+<h3 id="23-conventions">2.3 Conventions</h3>
+<p>The reference word list writes General American with these conventions:</p>
+<ul>
+<li><strong>One weak vowel.</strong> The vowel of <em>cup</em> and the weak vowel of <em>about</em> are both <em>uh</em> /ə/.</li>
+<li><strong>LOT is PALM.</strong> <em>hot</em> and <em>father</em> have the same vowel, <em>ah</em> /ɑ/. <em>aw</em> /ɔ/ stays separate (<em>caught</em>, <em>law</em>).</li>
+<li><strong>R-coloured vowels are a vowel plus r.</strong> <em>bird</em> is b-uh-r-d, <em>car</em> is k-ah-r, <em>hair</em> is h-e-r, <em>near</em> is n-i-r.</li>
+<li><strong>NORTH and FORCE</strong> are <em>oh</em> + r (<em>north</em>, <em>four</em>), except after w, where they are <em>ah</em> + r (<em>war</em>, <em>quarter</em>).</li>
+<li><strong>Unstressed for-</strong> in <em>forget</em>, <em>forgive</em> and similar words is <em>uh</em> + r.</li>
+<li><strong>Syllabic consonants</strong> are <em>uh</em> plus the consonant: <em>bottle</em> is b-ah-t-uh-l.</li>
+<li><strong>Flaps</strong> are written as the t or d the spelling shows: <em>water</em> is w-aw-t-uh-r.</li>
+</ul>
+<p>A word may have up to three pronunciations in the list, for example <em>the</em> as both <em>dh-uh</em> and <em>dh-ee</em>. Writers can use whichever they say.</p>
+<h2 id="3-the-glyphs">3. The glyphs</h2>
+<h3 id="31-the-syllable">3.1 The syllable</h3>
+<p>A syllable glyph is 42 units wide. It has three parts:</p>
+<ul>
+<li><strong>The stem</strong>: a horizontal line from x = 5 to x = 37 at y = 32, 2 units thick with round ends, always drawn in the ink colour.</li>
+<li><strong>Three tick slots</strong>: at x = 9 for the <strong>onset</strong> (the consonant before the vowel), x = 21 for the <strong>vowel</strong> and x = 33 for the <strong>coda</strong> (the consonant after it).</li>
+<li><strong>The ticks</strong>: vertical strokes 7.5 units wide with round caps. A tick's colour and position name its sound (section 2). Its position sets its extent, where L = 14 is the tick length:</li>
+</ul>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Position</th>
+<th>From</th>
+<th>To</th>
+<th>Length</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>up</td>
+<td>y = 18</td>
+<td>y = 32 (the stem)</td>
+<td>L</td>
+</tr>
+<tr>
+<td>centred</td>
+<td>y = 18</td>
+<td>y = 46</td>
+<td>2L, crossing the stem</td>
+</tr>
+<tr>
+<td>down</td>
+<td>y = 32 (the stem)</td>
+<td>y = 46</td>
+<td>L</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every syllable has a vowel tick. The onset and coda slots may be empty. The stem still spans all three slots, so an empty slot shows as bare stem, and a reader can always tell which slot a tick is in. The glyphs are displayed in the band y = 8 to 56.</p>
+<figure><img loading="lazy" alt="The word cats, drawn large, with each part labelled" src="figures/fig-anatomy.svg" /><figcaption><em>Figure 3. Anatomy of</em> cats <em>(k-a-t-s): one syllable, then a lone consonant.</em></figcaption></figure>
+<h3 id="32-why-each-shape-was-chosen">3.2 Why each shape was chosen</h3>
+<ul>
+<li>The centred tick is twice as long as the others and crosses the stem, so it reads as centred even at small sizes.</li>
+<li>Up, centred and down lie on the same three rows as the keys of the 3 × 3 keyboard and of the key grid (section 5). A writer who learns where a tick sits has also learned where its key is.</li>
+<li>Slots are fixed. The order of the ticks, not their spacing, says which consonant comes before the vowel and which after, so there is no ambiguity even in a word like <em>cats</em>.</li>
+</ul>
+<h3 id="33-the-lone-consonant">3.3 The lone consonant</h3>
+<p>A consonant that is neither an onset nor a coda stands alone. Its glyph is 18 units wide: a stub from x = 4 to x = 14 at y = 32, and a tick at x = 9 in the consonant's colour and position. Lone consonants carry clusters such as the <em>s</em> and <em>t</em> of <em>street</em> and the <em>k th s</em> of <em>strengths</em>.</p>
+<h3 id="34-syllables-from-sounds">3.4 Syllables from sounds</h3>
+<p>A word is a run of sounds. Stemsyl groups them into glyphs by a fixed rule, so writers never mark syllables:</p>
+<ol>
+<li>Each vowel takes the consonant just before it as its <strong>onset</strong>, unless that consonant is <em>ng</em>.</li>
+<li>Each vowel then takes the consonant just after it as its <strong>coda</strong>, if that consonant did not become the next vowel's onset and is not <em>h</em>, <em>y</em> or <em>w</em>.</li>
+<li>Every consonant left over stands alone (section 3.3).</li>
+<li>The glyphs follow in the order of their sounds. The glyphs of one word touch; their widths include the gaps between them.</li>
+</ol>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Sounds</th>
+<th>Glyphs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cats</td>
+<td>k a t s</td>
+<td>[k·a·t] s</td>
+</tr>
+<tr>
+<td>street</td>
+<td>s t r ee t</td>
+<td>s t [r·ee·t]</td>
+</tr>
+<tr>
+<td>happy</td>
+<td>h a p ee</td>
+<td>[h·a] [p·ee]</td>
+</tr>
+<tr>
+<td>London</td>
+<td>l uh n d uh n</td>
+<td>[l·uh·n] [d·uh·n]</td>
+</tr>
+<tr>
+<td>every</td>
+<td>e v r ee</td>
+<td>[e·v] [r·ee]</td>
+</tr>
+<tr>
+<td>ahead</td>
+<td>uh h e d</td>
+<td>[uh] [h·e·d]</td>
+</tr>
+<tr>
+<td>singer</td>
+<td>s i ng uh r</td>
+<td>[s·i·ng] [uh·r]</td>
+</tr>
+<tr>
+<td>extra</td>
+<td>e k s t r uh</td>
+<td>[e·k] s t [r·uh]</td>
+</tr>
+<tr>
+<td>world</td>
+<td>w uh r l d</td>
+<td>[w·uh·r] l d</td>
+</tr>
+<tr>
+<td>strengths</td>
+<td>s t r e ng k th s</td>
+<td>s t [r·e·ng] k th s</td>
+</tr>
+</tbody>
+</table></div>
+<p class="note">Square brackets hold one syllable glyph, as onset · vowel · coda. Letters outside brackets are lone consonants.</p>
+<h3 id="35-words-spaces-and-lines">3.5 Words, spaces and lines</h3>
+<p>Stemsyl is written left to right, in lines from top to bottom. Words are separated by a space 16 units wide, and a line break starts a new line. Punctuation, numerals and the name mark sit on the same line as the words, in the order they are read.</p>
+<h3 id="36-the-name-mark">3.6 The name mark</h3>
+<p>A filled diamond marks a name, where English would use a capital letter: ◆ before <em>Jon</em>, ◆ before <em>London</em>. It is 22 units wide, with corners at (11, 6), (17, 13), (11, 20) and (5, 13), and it sits above the stem line, before the first glyph of the name. Sentence starts need no mark, because they are clear from the full stop before them. It is drawn in the <strong>mark colour</strong>, which is also used for numerals and punctuation (section 3.9).</p>
+<h3 id="37-numerals">3.7 Numerals</h3>
+<p>A numeral is a 3 × 3 grid of square dots laid out like the pips on dice: a digit lights as many dots as its value. Unlit dots stay faintly visible, so a reader can count instead of remembering. The numerals are not the author's design. They are borrowed from the digits of an "Intuitive Clock" that the author saw shared on Reddit, and who first designed them is not known.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Digit</th>
+<th>Lit dots (row, column; 1 is top or left)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>none: the empty grid</td>
+</tr>
+<tr>
+<td>1</td>
+<td>centre (2,2)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>the ends of the middle row (2,1), (2,3)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>the middle row</td>
+</tr>
+<tr>
+<td>4</td>
+<td>the four corners</td>
+</tr>
+<tr>
+<td>5</td>
+<td>the corners and the centre</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5, plus the top middle (1,2)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>6, plus the bottom middle (3,2)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>the ring: every dot but the centre</td>
+</tr>
+<tr>
+<td>9</td>
+<td>all nine</td>
+</tr>
+</tbody>
+</table></div>
+<p>A numeral is 48 units wide. Its dots are 10.4-unit squares with corners rounded by 12% of their size, 2.08 units apart. The grid is centred on the stem line, so the middle row, which holds 1, 2 and 3, runs along the line of the words. Lit dots are in the mark colour, and unlit ones in the frame colour (#9C9A92, or #8B8A83 in the dark theme) at 22% opacity.</p>
+<p>Between two digits, three characters take the numerals' own form:</p>
+<ul>
+<li>A <strong>colon</strong> (as in 7:45) is two small squares, one above the other.</li>
+<li>A <strong>full stop</strong> (a decimal point) is one small square at the foot of the grid.</li>
+<li>A <strong>comma</strong> (a thousands separator) is a thin gap.</li>
+</ul>
+<p>The small squares are half a dot wide.</p>
+<figure><img loading="lazy" alt="The numerals 0 to 9" src="figures/fig-numerals.svg" /><figcaption><em>Figure 4. The numerals.</em></figcaption></figure>
+<h3 id="38-punctuation">3.8 Punctuation</h3>
+<p>Stemsyl uses twelve punctuation marks, drawn in the mark colour with strokes 3.6 units wide and round ends. Each is 30 units wide.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Mark</th>
+<th>Glyph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>full stop .</td>
+<td>a dot of radius 4.6 near the foot of the line (y = 46)</td>
+</tr>
+<tr>
+<td>comma ,</td>
+<td>a short stroke slanting down to the left, below the stem</td>
+</tr>
+<tr>
+<td>question ?</td>
+<td>a hook over a dot</td>
+</tr>
+<tr>
+<td>exclamation !</td>
+<td>an upright stroke over a dot</td>
+</tr>
+<tr>
+<td>colon :</td>
+<td>two dots, above and below the stem</td>
+</tr>
+<tr>
+<td>semicolon ;</td>
+<td>a dot above the stem and a comma stroke below</td>
+</tr>
+<tr>
+<td>open quote “</td>
+<td>an upper-left corner ⌜</td>
+</tr>
+<tr>
+<td>close quote ”</td>
+<td>a lower-right corner ⌟</td>
+</tr>
+<tr>
+<td>open bracket (</td>
+<td>a curve open to the right</td>
+</tr>
+<tr>
+<td>close bracket )</td>
+<td>a curve open to the left</td>
+</tr>
+<tr>
+<td>dash –</td>
+<td>a low horizontal stroke</td>
+</tr>
+<tr>
+<td>slash /</td>
+<td>a long stroke slanting up to the right</td>
+</tr>
+</tbody>
+</table></div>
+<figure><img loading="lazy" alt="The punctuation marks and the name mark" src="figures/fig-punctuation.svg" /><figcaption><em>Figure 5. Punctuation, and the name mark.</em></figcaption></figure>
+<h3 id="39-colour">3.9 Colour</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Light theme</th>
+<th>Dark theme</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ink</td>
+<td><span class="sw" style="background:#2C2C2A"></span>#2C2C2A</td>
+<td><span class="sw" style="background:#E8E6DD"></span>#E8E6DD</td>
+<td>the t n d family, and every stem and stub</td>
+</tr>
+<tr>
+<td>rose</td>
+<td><span class="sw" style="background:#B65754"></span>#B65754</td>
+<td><span class="sw" style="background:#E07B77"></span>#E07B77</td>
+<td>p m b</td>
+</tr>
+<tr>
+<td>mauve</td>
+<td><span class="sw" style="background:#A55B91"></span>#A55B91</td>
+<td><span class="sw" style="background:#D487BE"></span>#D487BE</td>
+<td>f w v</td>
+</tr>
+<tr>
+<td>indigo</td>
+<td><span class="sw" style="background:#4848B9"></span>#4848B9</td>
+<td><span class="sw" style="background:#9084FF"></span>#9084FF</td>
+<td>th h dh</td>
+</tr>
+<tr>
+<td>blue (consonant)</td>
+<td><span class="sw" style="background:#238DC0"></span>#238DC0</td>
+<td><span class="sw" style="background:#6FC6FC"></span>#6FC6FC</td>
+<td>s l z</td>
+</tr>
+<tr>
+<td>emerald</td>
+<td><span class="sw" style="background:#229279"></span>#229279</td>
+<td><span class="sw" style="background:#55BCA1"></span>#55BCA1</td>
+<td>sh r zh</td>
+</tr>
+<tr>
+<td>olive</td>
+<td><span class="sw" style="background:#4F7103"></span>#4F7103</td>
+<td><span class="sw" style="background:#BCDD73"></span>#BCDD73</td>
+<td>ch y j</td>
+</tr>
+<tr>
+<td>amber</td>
+<td><span class="sw" style="background:#A19005"></span>#A19005</td>
+<td><span class="sw" style="background:#A6940E"></span>#A6940E</td>
+<td>k ng g</td>
+</tr>
+<tr>
+<td>red</td>
+<td><span class="sw" style="background:#C40027"></span>#C40027</td>
+<td><span class="sw" style="background:#C34A55"></span>#C34A55</td>
+<td>a, eye</td>
+</tr>
+<tr>
+<td>orange</td>
+<td><span class="sw" style="background:#8F2400"></span>#8F2400</td>
+<td><span class="sw" style="background:#FF7F00"></span>#FF7F00</td>
+<td>ah, ow</td>
+</tr>
+<tr>
+<td>yellow</td>
+<td><span class="sw" style="background:#D4A900"></span>#D4A900</td>
+<td><span class="sw" style="background:#FFE135"></span>#FFE135</td>
+<td>e, ay</td>
+</tr>
+<tr>
+<td>green</td>
+<td><span class="sw" style="background:#236B27"></span>#236B27</td>
+<td><span class="sw" style="background:#A1FD60"></span>#A1FD60</td>
+<td>i, ee</td>
+</tr>
+<tr>
+<td>blue (vowel)</td>
+<td><span class="sw" style="background:#002FEC"></span>#002FEC</td>
+<td><span class="sw" style="background:#5081C8"></span>#5081C8</td>
+<td>u, oo</td>
+</tr>
+<tr>
+<td>grey</td>
+<td><span class="sw" style="background:#5F5F5F"></span>#5F5F5F</td>
+<td><span class="sw" style="background:#999999"></span>#999999</td>
+<td>uh, aw</td>
+</tr>
+<tr>
+<td>violet</td>
+<td><span class="sw" style="background:#582684"></span>#582684</td>
+<td><span class="sw" style="background:#9826EA"></span>#9826EA</td>
+<td>oh, oy</td>
+</tr>
+<tr>
+<td>mark</td>
+<td><span class="sw" style="background:#534AB7"></span>#534AB7</td>
+<td><span class="sw" style="background:#AFA9EC"></span>#AFA9EC</td>
+<td>numerals, punctuation, the name mark</td>
+</tr>
+</tbody>
+</table></div>
+<p>The consonant colours were chosen to stay distinct for normal vision and for red-weak and green-weak vision. The vowel colours were then tuned to stay distinct from the consonant families under normal, protan and deutan vision. Colour is never the only cue:</p>
+<ul>
+<li>A tick's slot says whether it is a consonant or a vowel.</li>
+<li>Its position can be read without colour, and narrows a consonant to one of eight sounds and a vowel to one of four or six.</li>
+<li>English or IPA can be shown under every word (section 3.10).</li>
+</ul>
+<p>The light theme is ink on white; the dark theme is light ink on black.</p>
+<h3 id="310-captions-english-or-ipa-under-each-word">3.10 Captions: English or IPA under each word</h3>
+<p>A writer can show, under each written word, nothing, its English spelling, or its sounds in IPA. The whole note can also be shown as English or as IPA instead of Stemsyl.</p>
+<p>The English under a word is chosen by this rule:</p>
+<ol>
+<li>If the writer picked the word from the suggestion strip, or typed it in English, its spelling is kept with its sounds and shown.</li>
+<li>Otherwise, if exactly one English word has exactly these sounds, that word is shown. Unless the word follows the name mark, only everyday dictionary words count here, so rare words and surnames that happen to share the sounds (for <em>boy</em>: <em>Boye</em>; for <em>cat</em>: <em>Catt</em>) don't stop a common word from being shown. After the name mark, names count too, so <em>Jon</em> and <em>John</em> stay undecided.</li>
+<li>Two short sounds are always the same word: <em>eye</em> on its own is <em>I</em>, and <em>uh</em> on its own is <em>a</em>.</li>
+<li>Otherwise (homophones such as <em>see</em> and <em>sea</em>, or sounds that make no word) the sounds are shown in IPA between slashes, for example /si/, until the writer picks a word.</li>
+</ol>
+<p>The first word of a sentence and every name-marked word are capitalised, as is <em>I</em>.</p>
+<figure><img loading="lazy" alt="An example note with the English under each word" src="figures/fig-example.svg" /><figcaption><em>Figure 6. "Practice makes perfect. We met Jon in London at 7:45 on Monday." as the apps export it, with English captions.</em></figcaption></figure>
+<h2 id="4-writing-english-in-stemsyl">4. Writing English in Stemsyl</h2>
+<p>To write an English word in Stemsyl, find its pronunciation and draw its sounds. The reference apps do this with the word list of section 6:</p>
+<ul>
+<li><strong>Typing English on a physical keyboard, or with the Latin 3 × 3 keys</strong>: each word is looked up when it is finished (by a space, a new line or punctuation) and replaced by its sounds, with its spelling kept (section 3.10). A word with a capital letter in the middle of a sentence gets the name mark.</li>
+<li><strong>Pasting English</strong>: each word becomes its sounds the same way. Digits become numerals, punctuation becomes Stemsyl punctuation, and a word that isn't in the list is skipped and reported, so the writer can spell it by its sounds.</li>
+<li><strong>Exporting</strong>: a note can be copied back out as English, using the spellings kept or found by the caption rule, or as IPA.</li>
+</ul>
+<p>A word not in the list, such as a new name, is written by its sounds. The script needs no list; the list only speeds up typing and supplies the English captions.</p>
+<h2 id="5-keyboards">5. Keyboards</h2>
+<h3 id="51-what-every-keyboard-shares">5.1 What every keyboard shares</h3>
+<ul>
+<li>
+<p><strong>The note.</strong> A note is a sequence of tokens:</p>
+<ul>
+<li>sounds</li>
+<li>spaces</li>
+<li>line breaks</li>
+<li>punctuation marks</li>
+<li>numerals</li>
+<li>name marks</li>
+<li>silent spelling tokens, each holding the English spelling of the sounds after it</li>
+</ul>
+<p>Syllables are never stored. They are formed from the sounds (section 3.4) every time the note is drawn, so inserting or deleting a sound anywhere regroups its word immediately.</p>
+</li>
+<li>
+<p><strong>The cursor</strong> moves between sounds, including between the ticks of one glyph. Inside a glyph it stands halfway between two tick slots.</p>
+</li>
+<li><strong>The word strip</strong> above the keys offers words after each sound (section 5.6).</li>
+<li><strong>Other features:</strong><ul>
+<li>Undo.</li>
+<li>Several notes, each with a title.</li>
+<li>A glyph-size setting.</li>
+<li>Views of the note as Stemsyl, English or IPA.</li>
+<li>Captions (section 3.10).</li>
+<li>Sharing: the note as an image (PNG or SVG, with or without captions), as English text or as IPA text.</li>
+<li>Backup: a backup file that restores every note on another device.</li>
+</ul>
+</li>
+</ul>
+<h3 id="52-keys-a-key-for-every-sound">5.2 Keys: a key for every sound</h3>
+<p>The Keys layout has a key for each sound, with its tick drawn on a short stem in its colour and position, and its name.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Row</th>
+<th>Keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 (up consonants)</td>
+<td>t · p · f · th · s · sh · ch · k</td>
+</tr>
+<tr>
+<td>2 (centred consonants)</td>
+<td>n · m · w · h · l · r · y · ng</td>
+</tr>
+<tr>
+<td>3 (down consonants)</td>
+<td>d · b · v · dh · z · zh · j · g</td>
+</tr>
+<tr>
+<td>4 (vowels)</td>
+<td>uh · a · ah · eye · ow · i · ee · delete</td>
+</tr>
+<tr>
+<td>5 (vowels)</td>
+<td>u · oo · e · ay · aw · oh · oy · new line</td>
+</tr>
+<tr>
+<td>6</td>
+<td>123 · name mark ◆ · comma · space · full stop · question mark · clear</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rows 1 to 3 are the consonant chart of section 2.1, turned so that the families run across the keyboard. The row of a key is the position of its tick, so the key grid teaches the script as it is used.</p>
+<p>The <strong>123</strong> key switches to a page with:</p>
+<ul>
+<li>the numerals 1 to 9 and 0, drawn as dice</li>
+<li>quotes, brackets, ! : ; – and /</li>
+<li>delete and new line</li>
+<li>a note on how to read the numerals</li>
+</ul>
+<figure class="wide"><img loading="lazy" alt="The phone keyboard: the Keys layout, and the 3 × 3 layout choosing a tick position and then its colour" src="figures/fig-phone.png" /><figcaption><em>Figure 7. The phone app: Keys (1), and 3 × 3 choosing a position (2), then a colour (3).</em></figcaption></figure>
+<h3 id="53-the-3-3-keyboard-two-taps-a-sound">5.3 The 3 × 3 keyboard: two taps a sound</h3>
+<p>The 3 × 3 keyboard types any sound with two taps on nine keys. The first tap chooses where the tick goes, and the second chooses its colour.</p>
+<p><strong>The position page:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Left</th>
+<th>Middle</th>
+<th>Right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Top row</strong> (consonant)</td>
+<td>C up</td>
+<td>C mid</td>
+<td>C down</td>
+</tr>
+<tr>
+<td><strong>Middle row</strong> (vowel)</td>
+<td>V up</td>
+<td>V mid</td>
+<td>V down</td>
+</tr>
+<tr>
+<td><strong>Bottom row</strong> (edit)</td>
+<td>delete</td>
+<td>space</td>
+<td>new line</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each position key shows its tick on a stem.</p>
+<p><strong>The colour page.</strong> After a position, the keys show every sound written at that position, each as its tick in its colour with its name. The first key (top left) shows the chosen position with a ✕ and goes back without writing anything. Choosing a colour writes the sound and returns to the position page.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Keys 2 to 9, in order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>consonant up</td>
+<td>t · p · f · th · s · sh · ch · k</td>
+</tr>
+<tr>
+<td>consonant centred</td>
+<td>n · m · w · h · l · r · y · ng</td>
+</tr>
+<tr>
+<td>consonant down</td>
+<td>d · b · v · dh · z · zh · j · g</td>
+</tr>
+<tr>
+<td>vowel up</td>
+<td>eye · ay · ee · oy</td>
+</tr>
+<tr>
+<td>vowel centred</td>
+<td>a · ah · e · i · u · uh</td>
+</tr>
+<tr>
+<td>vowel down</td>
+<td>ow · aw · oh · oo</td>
+</tr>
+</tbody>
+</table></div>
+<p>The colour order is the same for every consonant position, so each colour family always has the same key.</p>
+<p><strong>Other pages:</strong></p>
+<ul>
+<li><strong>Numbers</strong>: 1 to 8 on the first eight keys. The ninth key is split corner to corner into 9 (upper-left triangle) and 0 (lower-right).</li>
+<li><strong>Punctuation</strong>: . , ? ! : ; ( ) and quotation marks.</li>
+<li><strong>Cursor</strong>: home, up, end, left, enter, right, delete, down and space.</li>
+</ul>
+<p><strong>Swiping.</strong> A quick sideways swipe across the keys moves the cursor:</p>
+<ul>
+<li>The swipe must be at least 40 points long, mainly horizontal (more than 1.2 times its height) and shorter than 600 ms.</li>
+<li>It moves the cursor one sound for each 36 points.</li>
+<li>A swipe never types.</li>
+</ul>
+<p><strong>Holding, on the phone.</strong> Holding the centre key for 420 ms steps through sounds → numbers → punctuation → cursor → sounds.</p>
+<h3 id="54-the-watch-keyboard">5.4 The watch keyboard</h3>
+<p>The watch keyboard is the 3 × 3 keyboard together with a complete editor. The whole app, including its panels and messages, fits the 46 mm Apple Watch Series 12 screen (208 × 248 points, 416 × 496 pixels). It shrinks to fit smaller screens, down to the 42 mm's 187 × 223 points.</p>
+<figure class="wide"><img loading="lazy" alt="Every page of the watch keyboard" src="figures/fig-watch.png" /><figcaption><em>Figure 8. The watch keyboard, at the watch's own pixel size.</em></figcaption></figure>
+<p><strong>Layout</strong>, from top to bottom:</p>
+<ul>
+<li><strong>The note strip</strong>: one line of the note, scrolled to keep the cursor in sight.</li>
+<li><strong>The word strip</strong>: word suggestions. A menu setting can put it below the keys instead.</li>
+<li><strong>The 3 × 3 keys</strong>, filling the rest of the screen. The bottom corner keys follow the rounded corners of the screen.</li>
+</ul>
+<p><strong>Holding a key switches pages.</strong> On a watch there is no room for a row of mode buttons, so the middle key of each edge doubles as one. Holding it for 420 ms brings up another page of keys:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Held key</th>
+<th>Brings up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>top middle</td>
+<td>numbers</td>
+</tr>
+<tr>
+<td>middle left</td>
+<td>punctuation</td>
+</tr>
+<tr>
+<td>middle right</td>
+<td>the options (below)</td>
+</tr>
+<tr>
+<td>bottom middle</td>
+<td>the cursor keys</td>
+</tr>
+<tr>
+<td>centre</td>
+<td>the letters: from numbers, punctuation, the cursor keys or the options, whichever letters were last in use; from the tick positions, the Latin letters (section 5.5); from the Latin groups, the tick positions; from a colour page or a letter page, the page before it</td>
+</tr>
+</tbody>
+</table></div>
+<p>Further rules:</p>
+<ul>
+<li>The holds work from every page, including a colour page, so a writer is never more than one hold away from any page.</li>
+<li>Each of these keys carries a small corner tag naming what its hold brings up: 123, ?!, opt, an arrow for the cursor, a tick for the tick positions, or abc.</li>
+<li>On the page a key brings up, its tag is highlighted, and holding that key just does what a tap does.</li>
+<li>The split 9 · 0 key never holds.</li>
+<li>A tap on any of these keys still does what its face shows.</li>
+<li>A finger that moves more than 18 points cancels a hold.</li>
+<li>A new touch always clears any hold or swipe left over from the last one.</li>
+</ul>
+<p><strong>The options page</strong> holds what a larger screen keeps in a top bar:</p>
+<ul>
+<li>Notes (with the number of notes)</li>
+<li>Title</li>
+<li>Share</li>
+<li>View (Stemsyl, English or IPA)</li>
+<li>Menu</li>
+<li>Under (nothing, English or IPA under each word)</li>
+<li>Undo</li>
+<li>New note</li>
+<li>Glyph size: one key split corner to corner into A− and A+</li>
+</ul>
+<p><strong>Display mode.</strong> Holding the note strip opens the whole note over the watch face, in as many lines as it needs, and it scrolls. In display mode:</p>
+<ul>
+<li>A tap puts the cursor where it lands. It also brings up an edit bar of three keys at the bottom: delete, space and new line.</li>
+<li>Holding anywhere on the note returns to the keys, with the cursor where it was put.</li>
+<li>The first time or two, a tap on the note strip in key view shows how to open display mode.</li>
+</ul>
+<p>This split keeps small screens usable. Holding opens and closes display mode, so a stray tap on the strip never does. Taps inside display mode place the cursor exactly.</p>
+<p><strong>Clearing.</strong> Holding delete (⌫) for 700 ms clears all the text. This works from any page that has a delete key, and from the edit bar in display mode.</p>
+<ul>
+<li>While the key is held, it fills with the warning colour, so the writer can still let go in time. Let go sooner, and it deletes one sound, as a tap does.</li>
+<li>A finger that slides off the key clears nothing.</li>
+<li>A message says the text was cleared, and <strong>Undo</strong>, on the options page, brings the note back.</li>
+<li>In a text box, the same hold empties the box instead.</li>
+</ul>
+<p><strong>Text boxes.</strong> Renaming a note and writing English (section 5.5) open a text box with the Latin keys. Done or Insert confirms, and ✕ or Escape cancels.</p>
+<h3 id="55-latin-letters-on-the-3-3-keys">5.5 Latin letters on the 3 × 3 keys</h3>
+<p>Latin letters are typed in two taps, like sounds.</p>
+<p><strong>The group page:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Left</th>
+<th>Middle</th>
+<th>Right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Top row</strong></td>
+<td>a b c d e</td>
+<td>f g h i j</td>
+<td>k l m n o</td>
+</tr>
+<tr>
+<td><strong>Middle row</strong></td>
+<td>p q r s t</td>
+<td>u v w x y</td>
+<td>z ' ⇧</td>
+</tr>
+<tr>
+<td><strong>Bottom row</strong></td>
+<td>delete</td>
+<td>space</td>
+<td>new line</td>
+</tr>
+</tbody>
+</table></div>
+<p>Choosing a group shows its letters on the next keys, after a ✕ key that goes back. Shift makes the next letter a capital.</p>
+<p>In a note, typed letters build an English word, and the word strip offers completions, with dictionary words first. Tapping a completion, or finishing the word with space, new line or punctuation, turns it into its sounds (section 4). A capital in the middle of a sentence adds the name mark. A word that isn't in the list stays as typed, so the writer can fix it or spell it by its sounds.</p>
+<p>In a text box (the note's title, or the <strong>Write English</strong> box that turns English into Stemsyl at the cursor), the same keys type plain text. The other page switches (numbers, punctuation, cursor) work there too.</p>
+<h3 id="56-the-word-strip">5.6 The word strip</h3>
+<p>After each sound, the strip offers:</p>
+<ol>
+<li>up to five of the commonest words whose pronunciation is exactly the sounds of the word so far</li>
+<li>then longer words whose pronunciation begins with those sounds, commonest first</li>
+<li>then any remaining exact matches</li>
+</ol>
+<p>Offensive words are never offered as longer words, but they can still be written by their sounds. Tapping a word:</p>
+<ul>
+<li>adds any sounds it has beyond those typed</li>
+<li>keeps its spelling for the captions and for Copy English</li>
+<li>adds a space, which a punctuation mark typed next replaces</li>
+</ul>
+<h3 id="57-physical-keyboards-and-paste">5.7 Physical keyboards and paste</h3>
+<p>On a computer, the writer types English. Each word turns into its sounds at a space, Enter or punctuation (section 4). Digits type numerals, the arrow keys move the cursor, and Ctrl-Z or ⌘-Z undoes. Pasted English is converted the same way.</p>
+<h2 id="6-the-word-list">6. The word list</h2>
+<p>The reference apps carry a pronouncing list of <strong>271,173 English words</strong> in Stemsyl sounds, ordered commonest first. It is published on its own as <a data-repo="data/stemsyl-words.tsv" href="../data/stemsyl-words.tsv"><code>data/stemsyl-words.tsv</code></a> under CC BY-SA 4.0 (section 10).</p>
+<h3 id="61-sources-and-method">6.1 Sources and method</h3>
+<ul>
+<li><strong>The vocabulary</strong>: every word of the CMU Pronouncing Dictionary, and every word of the English Speller Database's (formerly SCOWL) American list at size 80.</li>
+<li>
+<p><strong>Pronunciations</strong>:</p>
+<ul>
+<li><strong>117,746</strong> are from the CMU Pronouncing Dictionary. Its ARPABET symbols map one to one onto Stemsyl sounds (section 11), with the conventions of section 2.3.</li>
+<li><strong>102,503</strong> are built from CMU words by rules, each checked by rebuilding CMU words that were hidden from it: 83,665 by suffixes (<em>abjured</em> from <em>abjure</em>), 7,214 by prefixes, and 11,624 as compounds (<em>aboveground</em> from <em>above</em> and <em>ground</em>).</li>
+<li><strong>50,924</strong> rarer words and names are predicted by eSpeak NG, with a second reading from Kyubyong Park and Jongseok Kim's g2p model when the two differ by one sound. Predicted pronunciations are usually right, or one sound off.</li>
+</ul>
+</li>
+<li>
+<p><strong>Order</strong>: the first 30,000 words are the commonest, by Hermit Dave's FrequencyWords counts from OpenSubtitles 2018. The other words counted there follow in bands of falling count:</p>
+<ul>
+<li>words counted at least 100 times, then at least 30 times, each band ordered by count</li>
+<li>then at least 10, 3 and 1 times, each band alphabetically</li>
+</ul>
+<p>Uncounted words come last, alphabetically within each group: first the words of the speller's American lists at sizes 60, 70 and 80, then the words found only in the CMU dictionary.</p>
+</li>
+<li>
+<p><strong>Flags</strong>:</p>
+<ul>
+<li><strong>79,505</strong> words are flagged as everyday dictionary words (the speller's American list at size 60). These count as homophones in the caption rule (section 3.10).</li>
+<li><strong>250</strong> words are flagged as offensive and kept out of longer-word suggestions, partly using the LDNOOBW list.</li>
+</ul>
+</li>
+</ul>
+<h3 id="62-file-format">6.2 File format</h3>
+<p><a data-repo="data/stemsyl-words.tsv" href="../data/stemsyl-words.tsv"><code>data/stemsyl-words.tsv</code></a> is UTF-8, tab-separated, with one header row and one word per row:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rank</td>
+<td>1 for the commonest word</td>
+</tr>
+<tr>
+<td>word</td>
+<td>the spelling, lowercase; 340 words contain an apostrophe</td>
+</tr>
+<tr>
+<td>sounds</td>
+<td>up to three pronunciations in sound letters, separated by spaces, the usual one first</td>
+</tr>
+<tr>
+<td>ipa</td>
+<td>the same pronunciations in IPA</td>
+</tr>
+<tr>
+<td>source</td>
+<td>cmu, suffix, prefix, compound or g2p</td>
+</tr>
+<tr>
+<td>dictionary</td>
+<td>1 for an everyday dictionary word</td>
+</tr>
+<tr>
+<td>offensive</td>
+<td>1 for a word kept out of longer-word suggestions</td>
+</tr>
+</tbody>
+</table></div>
+<p>218,761 words have one pronunciation, 50,726 have two and 1,686 have three.</p>
+<h2 id="7-variations-and-extensions">7. Variations and extensions</h2>
+<p>Everything below is a variation of what this document describes. It is published as part of it, so it is equally prior art.</p>
+<h3 id="71-the-script">7.1 The script</h3>
+<ul>
+<li>
+<p><strong>Other accents.</strong> Add vowels for accents that keep them apart, using free cells of the vowel table or new colours. For example:</p>
+<ul>
+<li>a separate LOT vowel for British English</li>
+<li>centring diphthongs (/ɪə/, /eə/, /ʊə/) as up, centred or down ticks of existing colours</li>
+<li>non-rhotic r written only before a vowel</li>
+</ul>
+<p>Any consonant or vowel system can be split into families of up to three by a shared feature, with colour for the family and position for the member.</p>
+</li>
+<li>
+<p><strong>Other languages.</strong> Assign colours and positions to another language's sounds. A tone or length can be written as the tick's shape, its thickness, a notch or a dot, or a mark on the stem.</p>
+</li>
+<li><strong>More or fewer positions.</strong> Use two, four or five tick positions (for example quarter heights), ticks that lean left or right, or ticks above and below at once, to carry more sounds with fewer colours.</li>
+<li><strong>Without colour.</strong> Replace or back up colour with any other feature of the tick: dash patterns, hatching, thickness, width, end shapes (round, square, arrow, dot, fork, hook), outline versus fill, or small marks such as notches and dots. This allows single-colour print, handwriting with one pen, engraving, embossing, and readers who see no colour at all. Colour and shape can also be combined, so that each backs up the other.</li>
+<li>
+<p><strong>Other geometry.</strong></p>
+<ul>
+<li>Vertical stems with horizontal ticks, for vertical writing.</li>
+<li>Round, curved or slanted stems.</li>
+<li>Stems whose length follows the syllable.</li>
+<li>More slots per stem for consonant clusters, instead of lone consonants.</li>
+<li>Clusters as ticks side by side in one slot.</li>
+<li>Stress shown by a thicker stem, a dot or a brighter vowel tick.</li>
+<li>Syllables of one word joined into one continuous stem.</li>
+</ul>
+</li>
+<li>
+<p><strong>Other marks.</strong> Any shape, colour or underline for the name mark, and marks for acronyms or for whole words in capitals. Numerals on any dot grid, such as 2 × 5 or braille cells.</p>
+</li>
+<li>
+<p><strong>Fonts and encodings.</strong></p>
+<ul>
+<li>Stemsyl as a colour font, such as OpenType COLR/CPAL or SVG-in-OpenType, that composes syllable glyphs from sound characters by ligature or contextual rules, as Hangul fonts compose syllable blocks.</li>
+<li>An encoding of Stemsyl sounds in the Private Use Area of Unicode.</li>
+<li>Stemsyl glyphs drawn as images, SVG, LED matrices, or e-ink with patterns in place of colour.</li>
+</ul>
+</li>
+<li>
+<p><strong>Other media.</strong></p>
+<ul>
+<li>Tactile Stemsyl: raised ticks whose height gives the position and whose texture gives the family.</li>
+<li>Stemsyl on signs, in books for early readers, and as a reading aid printed above or below ordinary spelling.</li>
+<li>Colour-coded reading instruction that uses Stemsyl's colours on ordinary letters.</li>
+</ul>
+</li>
+<li>
+<p><strong>Automatic conversion.</strong></p>
+<ul>
+<li>English text to Stemsyl by dictionary and grapheme-to-phoneme prediction.</li>
+<li>Speech to Stemsyl by phoneme recognition.</li>
+<li>Stemsyl to speech.</li>
+<li>Recognising Stemsyl in photos and handwriting by the colour and position of each tick.</li>
+</ul>
+</li>
+</ul>
+<h3 id="72-input">7.2 Input</h3>
+<ul>
+<li>
+<p><strong>Two-step choice on other devices.</strong> Choosing a position and then a colour works on any device with a few keys or directions:</p>
+<ul>
+<li>numeric keypads and 12-key phone pads, with 1 to 9 as the grid</li>
+<li>TV remotes and D-pads</li>
+<li>game controllers</li>
+<li>smart rings, and watch crowns or bezels (turned to choose the colour)</li>
+<li>car dials, VR controllers and eye tracking</li>
+<li>single-switch scanning, which steps through rows and then keys</li>
+<li>foot pedals</li>
+</ul>
+</li>
+<li>
+<p><strong>Other orders and gestures.</strong></p>
+<ul>
+<li>Colour first and then position.</li>
+<li>Both in one gesture: press a position key and slide toward a colour, like Japanese flick input.</li>
+<li>Radial or marking menus with eight directions for the eight families.</li>
+<li>Chords: two keys at once.</li>
+<li>Pressure or press length choosing the position.</li>
+<li>Handwriting recognition of ticks drawn with a finger.</li>
+</ul>
+</li>
+<li>
+<p><strong>Holding keys to switch pages.</strong> Any key of any small grid can be given a hold that brings up another page, with a small tag on the key naming that page, a highlighted tag on the page it brings up, and no hold on keys where a long press already has a meaning. Other hold targets, corners instead of edges, double taps, and haptic feedback are all variations of this. Holding the centre can switch between any two alphabets and return to the one last in use.</p>
+</li>
+<li>
+<p><strong>Small-screen editing.</strong> Any small screen, such as a watch, a ring display, glasses or a car display, can have:</p>
+<ul>
+<li>a one-line text strip that opens into a full view by a hold and closes by another hold</li>
+<li>taps in the full view that place the cursor and bring up a minimal edit bar</li>
+<li>a choice of whether suggestions sit above or below the keys</li>
+<li>a long hold on delete that clears all the text, with the key filling with a warning colour during the hold, and an undo</li>
+</ul>
+</li>
+<li>
+<p><strong>Latin letters.</strong> Letters can be grouped in fives, by frequency, as on phone keypads (abc, def…), or in any other groups of up to eight per page. Words can be predicted or completed, and converted into Stemsyl when they are finished.</p>
+</li>
+<li><strong>Suggestions.</strong> Any ranking that puts exact sound matches first, then prefix completions by frequency, then rare exact matches. Filtering offensive words from completions only. Picking a word keeps its spelling for later export.</li>
+</ul>
+<h2 id="8-related-work">8. Related work</h2>
+<p>Stemsyl draws on long traditions in phonetic writing and in compact text entry. Its combination is new: a syllable stem with three fixed slots, a sound as colour plus tick position, two-tap entry on a 3 × 3 grid that mirrors the glyph, and watch-sized editing with hold-to-switch edge keys.</p>
+<ul>
+<li>
+<p><strong>Featural scripts.</strong></p>
+<ul>
+<li>Hangul (1443): letter shapes reflect how sounds are made, and letters are grouped into syllable blocks.</li>
+<li>Alexander Melville Bell's Visible Speech (1867): symbols built from articulatory features.</li>
+<li>Stemsyl also groups sounds into syllables, but it encodes each sound by colour and position rather than by shape.</li>
+</ul>
+</li>
+<li>
+<p><strong>Phonetic alphabets and spelling reforms for English.</strong></p>
+<ul>
+<li>Isaac Pitman's shorthand (1837): thick and thin strokes separate voiced from voiceless consonants, and a vowel's position beside a stroke gives its value.</li>
+<li>Gregg shorthand (1888).</li>
+<li>The Deseret alphabet (1850s).</li>
+<li>Shavian (1960s) and Quikscript (1966), both by Kingsley Read.</li>
+<li>The Initial Teaching Alphabet (1961).</li>
+<li>Unifon (1950s).</li>
+</ul>
+</li>
+<li>
+<p><strong>Colour for sounds.</strong></p>
+<ul>
+<li>Caleb Gattegno's Words in Colour (1962): each sound of English gets a colour on reading charts, whatever its spelling.</li>
+<li>The Color Vowel Chart: English vowels are named by colour words that contain them.</li>
+</ul>
+</li>
+<li>
+<p><strong>Compact and small-screen text entry.</strong></p>
+<ul>
+<li>T9 predictive text on phone keypads.</li>
+<li>MessagEase: a 3 × 3 grid with taps and slides.</li>
+<li>Japanese flick input on a 12-key pad.</li>
+<li>Korean phone keyboards that build syllables from strokes on a 12-key pad, such as Cheonjiin.</li>
+<li>Chorded keyboards and the stenotype: the stenotype writes sounds by chords.</li>
+<li>Watch keyboards, such as Apple's QWERTY keyboard with QuickPath on Apple Watch (2021) and third-party keyboards such as FlickType.</li>
+<li>Long presses for alternate characters on phone keyboards.</li>
+</ul>
+</li>
+</ul>
+<h2 id="9-reference-implementation">9. Reference implementation</h2>
+<p>The apps are plain HTML, CSS and JavaScript in single files, with no network use. They store notes in the browser's local storage on the device, under the key <code>stemsyl_keyboard_v1</code>.</p>
+<ul>
+<li><strong>Keyboard.</strong> Two layouts in one file: Keys and 3 × 3, with a switch at the top of the keyboard.</li>
+<li><strong>Watch.</strong> The 3 × 3 keyboard and editor, laid out for a 208 × 248-point screen. Apple Watch apps must be native, so this web version is a working model for a native watchOS keyboard.</li>
+<li><strong>Trainer.</strong> Reading practice: syllables, words and sentences, with spoken sounds from eSpeak NG.</li>
+</ul>
+<p>The repository's <code>tools</code> folder builds the apps from their sources and the word list, and rebuilds this document's figures and PDF. Its <code>tests</code> folder checks them in a browser at phone and watch sizes. Its <code>data</code> folder holds the word list.</p>
+<h2 id="10-licence-authorship-and-citation">10. Licence, authorship and citation</h2>
+<p><strong>The writing system and this document: CC0 1.0.</strong> To the extent possible under law, Phillip Bryan Larson has waived all copyright and related or neighbouring rights to the Stemsyl writing system and to this specification. The writing system includes its assignment of sounds to colours and positions, its glyph designs, punctuation and name mark, and its syllable rule. Figures 1 to 6 are part of this specification. The numeral design is borrowed (section 3.7) and is not the author's to dedicate, so this waiver does not cover it.</p>
+<p><strong>The software: GPL-3.0-or-later.</strong> The apps, the build tools and the tests are free software under the GNU General Public License, version 3 or (at your option) any later version. The screenshots in Figures 7 and 8 show that software.</p>
+<p><strong>The word list: CC BY-SA 4.0.</strong> The word list is published under the Creative Commons Attribution-ShareAlike 4.0 licence, because its order derives from FrequencyWords (CC BY-SA 4.0). Its other sources and their notices are listed in the repository's NOTICE file.</p>
+<p><strong>Authorship.</strong> Stemsyl, its colour-and-position scheme and the designs of its keyboards were conceived by Phillip Bryan Larson. The software, figures and text were developed with the assistance of Claude, an AI model made by Anthropic, working from his designs and instructions.</p>
+<p><strong>Trademarks.</strong> Apple Watch and watchOS are trademarks of Apple Inc. This work is not affiliated with or endorsed by Apple.</p>
+<p><strong>How to cite:</strong></p>
+<blockquote>
+<p>Larson, Phillip Bryan. <em>Stemsyl: a colour-stem phonetic script for English, with keyboards for phones and watches.</em> Specification, version 1.0, 28 September 2026.</p>
+</blockquote>
+<p><strong>Version history:</strong> 1.0, 28 September 2026: first publication.</p>
+<h2 id="11-appendix-tables">11. Appendix: tables</h2>
+<h3 id="111-sounds">11.1 Sounds</h3>
+<p>Consonants:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sound letter</th>
+<th>Name</th>
+<th>IPA</th>
+<th>Example</th>
+<th>ARPABET</th>
+<th>Colour</th>
+<th>Position</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>t</td>
+<td>t</td>
+<td>t</td>
+<td>tie</td>
+<td>T</td>
+<td>ink</td>
+<td>up</td>
+</tr>
+<tr>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+<td>nigh</td>
+<td>N</td>
+<td>ink</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>d</td>
+<td>d</td>
+<td>d</td>
+<td>die</td>
+<td>D</td>
+<td>ink</td>
+<td>down</td>
+</tr>
+<tr>
+<td>p</td>
+<td>p</td>
+<td>p</td>
+<td>pie</td>
+<td>P</td>
+<td>rose</td>
+<td>up</td>
+</tr>
+<tr>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>my</td>
+<td>M</td>
+<td>rose</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>b</td>
+<td>b</td>
+<td>b</td>
+<td>buy</td>
+<td>B</td>
+<td>rose</td>
+<td>down</td>
+</tr>
+<tr>
+<td>f</td>
+<td>f</td>
+<td>f</td>
+<td>fee</td>
+<td>F</td>
+<td>mauve</td>
+<td>up</td>
+</tr>
+<tr>
+<td>w</td>
+<td>w</td>
+<td>w</td>
+<td>why</td>
+<td>W</td>
+<td>mauve</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>v</td>
+<td>v</td>
+<td>v</td>
+<td>vee</td>
+<td>V</td>
+<td>mauve</td>
+<td>down</td>
+</tr>
+<tr>
+<td>T</td>
+<td>th</td>
+<td>θ</td>
+<td>thigh</td>
+<td>TH</td>
+<td>indigo</td>
+<td>up</td>
+</tr>
+<tr>
+<td>h</td>
+<td>h</td>
+<td>h</td>
+<td>high</td>
+<td>HH</td>
+<td>indigo</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>D</td>
+<td>dh</td>
+<td>ð</td>
+<td>thy</td>
+<td>DH</td>
+<td>indigo</td>
+<td>down</td>
+</tr>
+<tr>
+<td>s</td>
+<td>s</td>
+<td>s</td>
+<td>sue</td>
+<td>S</td>
+<td>blue</td>
+<td>up</td>
+</tr>
+<tr>
+<td>l</td>
+<td>l</td>
+<td>l</td>
+<td>lie</td>
+<td>L</td>
+<td>blue</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>z</td>
+<td>z</td>
+<td>z</td>
+<td>zoo</td>
+<td>Z</td>
+<td>blue</td>
+<td>down</td>
+</tr>
+<tr>
+<td>S</td>
+<td>sh</td>
+<td>ʃ</td>
+<td>shoe</td>
+<td>SH</td>
+<td>emerald</td>
+<td>up</td>
+</tr>
+<tr>
+<td>r</td>
+<td>r</td>
+<td>r</td>
+<td>rye</td>
+<td>R</td>
+<td>emerald</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>zh</td>
+<td>ʒ</td>
+<td>vision</td>
+<td>ZH</td>
+<td>emerald</td>
+<td>down</td>
+</tr>
+<tr>
+<td>C</td>
+<td>ch</td>
+<td>tʃ</td>
+<td>chew</td>
+<td>CH</td>
+<td>olive</td>
+<td>up</td>
+</tr>
+<tr>
+<td>y</td>
+<td>y</td>
+<td>j</td>
+<td>yes</td>
+<td>Y</td>
+<td>olive</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>J</td>
+<td>j</td>
+<td>dʒ</td>
+<td>jaw</td>
+<td>JH</td>
+<td>olive</td>
+<td>down</td>
+</tr>
+<tr>
+<td>k</td>
+<td>k</td>
+<td>k</td>
+<td>kite</td>
+<td>K</td>
+<td>amber</td>
+<td>up</td>
+</tr>
+<tr>
+<td>N</td>
+<td>ng</td>
+<td>ŋ</td>
+<td>sing</td>
+<td>NG</td>
+<td>amber</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>g</td>
+<td>g</td>
+<td>ɡ</td>
+<td>guy</td>
+<td>G</td>
+<td>amber</td>
+<td>down</td>
+</tr>
+</tbody>
+</table></div>
+<p>Vowels:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sound letter</th>
+<th>Name</th>
+<th>IPA</th>
+<th>Example</th>
+<th>ARPABET</th>
+<th>Colour</th>
+<th>Position</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a</td>
+<td>a</td>
+<td>æ</td>
+<td>cat</td>
+<td>AE</td>
+<td>red</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>eye</td>
+<td>aɪ</td>
+<td>my</td>
+<td>AY</td>
+<td>red</td>
+<td>up</td>
+</tr>
+<tr>
+<td>A</td>
+<td>ah</td>
+<td>ɑ</td>
+<td>father</td>
+<td>AA</td>
+<td>orange</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>W</td>
+<td>ow</td>
+<td>aʊ</td>
+<td>now</td>
+<td>AW</td>
+<td>orange</td>
+<td>down</td>
+</tr>
+<tr>
+<td>e</td>
+<td>e</td>
+<td>ɛ</td>
+<td>bed</td>
+<td>EH</td>
+<td>yellow</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>E</td>
+<td>ay</td>
+<td>eɪ</td>
+<td>day</td>
+<td>EY</td>
+<td>yellow</td>
+<td>up</td>
+</tr>
+<tr>
+<td>i</td>
+<td>i</td>
+<td>ɪ</td>
+<td>sit</td>
+<td>IH</td>
+<td>green</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>I</td>
+<td>ee</td>
+<td>i</td>
+<td>see</td>
+<td>IY</td>
+<td>green</td>
+<td>up</td>
+</tr>
+<tr>
+<td>u</td>
+<td>u</td>
+<td>ʊ</td>
+<td>book</td>
+<td>UH</td>
+<td>blue</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>U</td>
+<td>oo</td>
+<td>u</td>
+<td>too</td>
+<td>UW</td>
+<td>blue</td>
+<td>down</td>
+</tr>
+<tr>
+<td>@</td>
+<td>uh</td>
+<td>ə</td>
+<td>about</td>
+<td>AH (ER = @r)</td>
+<td>grey</td>
+<td>centred</td>
+</tr>
+<tr>
+<td>O</td>
+<td>aw</td>
+<td>ɔ</td>
+<td>law</td>
+<td>AO</td>
+<td>grey</td>
+<td>down</td>
+</tr>
+<tr>
+<td>B</td>
+<td>oy</td>
+<td>ɔɪ</td>
+<td>boy</td>
+<td>OY</td>
+<td>violet</td>
+<td>up</td>
+</tr>
+<tr>
+<td>G</td>
+<td>oh</td>
+<td>oʊ</td>
+<td>go</td>
+<td>OW</td>
+<td>violet</td>
+<td>down</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="112-geometry">11.2 Geometry</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value (units)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>glyph height · stem line</td>
+<td>64 · y = 32</td>
+</tr>
+<tr>
+<td>visible band</td>
+<td>y = 8 to 56</td>
+</tr>
+<tr>
+<td>syllable width · stem</td>
+<td>42 · x = 5 to 37, 2 thick, round ends</td>
+</tr>
+<tr>
+<td>tick slots (onset, vowel, coda)</td>
+<td>x = 9, 21, 33</td>
+</tr>
+<tr>
+<td>tick length L · tick width</td>
+<td>14 · 7.5, round caps</td>
+</tr>
+<tr>
+<td>up · centred · down</td>
+<td>y = 18–32 · 18–46 · 32–46</td>
+</tr>
+<tr>
+<td>lone consonant width · stub · tick</td>
+<td>18 · x = 4 to 14 · x = 9</td>
+</tr>
+<tr>
+<td>word space</td>
+<td>16</td>
+</tr>
+<tr>
+<td>name mark width · diamond</td>
+<td>22 · (11,6) (17,13) (11,20) (5,13)</td>
+</tr>
+<tr>
+<td>numeral width · dot · gap</td>
+<td>48 · 10.4 · 2.08, corners rounded 12%</td>
+</tr>
+<tr>
+<td>punctuation width · stroke</td>
+<td>30 · 3.6</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="113-watch-keyboard-measures">11.3 Watch keyboard measures</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>screen</td>
+<td>208 × 248 points (46 mm); fits down to 187 × 223 (42 mm)</td>
+</tr>
+<tr>
+<td>hold to switch pages, and to open or close display mode</td>
+<td>420 ms</td>
+</tr>
+<tr>
+<td>hold delete to clear all the text</td>
+<td>700 ms</td>
+</tr>
+<tr>
+<td>finger movement that cancels a hold</td>
+<td>more than 18 points</td>
+</tr>
+<tr>
+<td>swipe to move the cursor</td>
+<td>at least 40 points, more than 1.2 × its height, under 600 ms; one sound per 36 points</td>
+</tr>
+<tr>
+<td>glyph size on the watch</td>
+<td>24 to 56 units per 64, default 40</td>
+</tr>
+</tbody>
+</table></div>
+<div class="foot">Stemsyl specification 1.0, 28 September 2026. Written by Phillip Bryan Larson. Dedicated to the public domain under CC0 1.0. <span class="web">Also as a <a href="stemsyl-specification.pdf">PDF</a>.</span></div>
+</main>
+<script>
+/* links to the rest of the repository: on GitHub Pages they point at the repository on GitHub; elsewhere, at the files
+   beside this folder */
+(function(){
+  var h=location.hostname, parts=location.pathname.split('/').filter(Boolean), base='../';
+  if(/\.github\.io$/.test(h) && parts.length) base='https://github.com/'+h.split('.')[0]+'/'+parts[0]+'/blob/main/';
+  [].forEach.call(document.querySelectorAll('a[data-repo]'),function(a){
+    var p=a.getAttribute('data-repo'); a.href=(p||base.indexOf('github.com')<0)?base+p:base.replace('/blob/main/','');
+  });
+})();
+</script>
+</body>
+</html>

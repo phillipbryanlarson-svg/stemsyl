@@ -1,0 +1,6 @@
+# for tools/rebuild.py and tests/run.py
+playwright>=1.42        # then: python -m playwright install chromium
+markdown>=3.4
+pypdf>=3.0
+# for tools/wordlist only (see its README)
+numpy>=1.22

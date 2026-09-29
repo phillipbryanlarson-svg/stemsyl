@@ -1,0 +1,13 @@
+# made while building or testing; not part of the project
+__pycache__/
+*.pyc
+tests/out/
+docs/*.tmp
+
+# the word-list pipeline's downloaded sources, compiled helper and caches (see tools/wordlist/README.md)
+tools/wordlist/src
+tools/wordlist/espk
+tools/wordlist/*.json
+!tools/wordlist/superlatives.json
+tools/wordlist/*.pkl
+tools/wordlist/*.log

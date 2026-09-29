@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use or refer to Stemsyl, please cite it as below."
+title: "Stemsyl: a colour-stem phonetic script for English, with keyboards for phones and watches"
+abstract: >-
+  Stemsyl is a phonetic writing system for English in which each syllable is a short horizontal stem carrying up to
+  three vertical ticks (the consonant before the vowel, the vowel, and the consonant after it). A tick's position (up,
+  centred across the stem, or down) and its colour name exactly one sound: 24 consonants as eight colour families of
+  three, and 14 vowels as seven colours in up to three positions. Because each sound is a position and then a colour,
+  Stemsyl can be typed with two taps on a 3 x 3 grid of keys. This release contains the specification (a defensive
+  publication, dedicated to the public domain), free reference apps for phones and watches, and a 271,173-word
+  pronouncing list.
+type: software
+version: "1.0"
+date-released: "2026-09-28"
+authors:
+  - family-names: Larson
+    given-names: Phillip Bryan
+license:
+  - CC0-1.0
+  - GPL-3.0-or-later
+  - CC-BY-SA-4.0
+keywords:
+  - Stemsyl
+  - phonetic script
+  - writing system
+  - English
+  - colour
+  - syllable
+  - 3x3 keyboard
+  - smartwatch keyboard
+  - text entry
+  - defensive publication
